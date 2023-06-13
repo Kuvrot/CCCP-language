@@ -73,7 +73,6 @@ void compile() {
                 
                     try {
 
-
                         if (!isKeyword(words[i + 1])) {
                         
                             try {
@@ -109,27 +108,14 @@ void compile() {
                
                     if (isNumber(words[i + 1])) {
 
-
                         setIntVariable(words[i - 1], std::stoi(words[i + 1]));
-
-                       // if (words[i + 2] == "+") {
-                        
-                        //    intOperations (0 , words[i+1] , words[i+3]);
-                        
-                     //   }
-
-
                     }
                     else {
                     
                         setIntVariable(words[i - 1], getIntVariable(words[i + 1]));
                     
                     }
-
-
-                
                 }
-
 
                 if (words[i] == "+="){
             
@@ -145,9 +131,6 @@ void compile() {
             
                 }
 
-
-                
-
                 //Logical operators
 
 
@@ -156,7 +139,6 @@ void compile() {
                 if (words[i] == "alert") {
                 
                     std::string msg;
-
 
                     for (unsigned short int j = i + 2; j < words.size(); j++) {
 
@@ -177,9 +159,7 @@ void compile() {
 
                     }
 
-                    std::cout << msg;
-
-                
+                    std::cout << msg;  
                 }
                 
                 if (words[i] == "manifesto") {
@@ -196,13 +176,10 @@ void compile() {
 
                 //Use contribute as a name for a function for user input 
 
-                //methods
-
-            
+                //methods         
             }
 
             code += sa;
-
         }
 
         
@@ -239,9 +216,7 @@ bool isKeyword(std::string name) {
             return false;
         
         }
-
     }
-
 }
 
 //Detects if the given string is a number
@@ -285,14 +260,9 @@ void createIntVariable(std::string name , int data) {
 
             memory.push_back(data);
             IDs.push_back(name);
-
-
         }
         catch (std::exception& e) {
-
-
             std::cout << "An error ocurred at variable '" + name + "'" << e.what();
-
         }  
 
 }
@@ -313,11 +283,8 @@ void setIntVariable(std::string name, int data) {
                 std::cout << "comrade " + name + " can't be equal to " << data << e.what() << std::endl;
             
             }
-
         }
-
     }
-
 }
 
 
@@ -326,11 +293,9 @@ int getIntVariable(std::string name) {
     for (unsigned int i = 0; i < IDs.size(); i++) {
     
         if (IDs[i] == name) {
-        
-            return memory[i];
-        
-        }
-    
+     
+            return memory[i];     
+        }  
     }
 
 }
