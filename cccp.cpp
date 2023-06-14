@@ -11,7 +11,7 @@ std::vector <std::string> IDs;
 std::vector <std::string> Method_IDs;
 std::fstream file;
 std::string path;
-std::string keywords = "comrade if -> + - = / * true false manifesto propaganda ; 1 2 3 4 5 6 7 8 9 0 send worker alert += -+ /= *= contribute gulag";
+std::string keywords = "comrade if -> + - = / * true false manifesto propaganda ; 1 2 3 4 5 6 7 8 9 0 worker alert += -+ /= *= contribute gulag sendToGulag censor contribute revolutionize";
 std::vector <int> sum;
 
 void compile();
@@ -23,6 +23,9 @@ void setIntVariable(std::string name, int data);
 void setMethod(std::string, int data);
 bool isKeyword (std::string name);
 bool isNumber  (std::string data);
+bool comparison(std::string condition , int previousValue, int nextValue);
+
+unsigned int gulagPosition;
 
 std::string errors(int ID , std::string variableName);
 
@@ -47,14 +50,33 @@ int main()
 
 void compile() {
 
-    std::cout << "Starting a revolution..." << std::endl; 
-
         std::string code;
-
+        std::vector <std::string> lines;
         std::string sa;
+
         while (getline(file, sa)) {
 
-            std::string sentence = sa;
+            lines.push_back(sa);
+
+        }
+
+        system("cls");
+
+        std::cout << "Running a revolution called: " << path << std::endl;
+        std::cout << "-----------------------------" << std::endl;
+
+        //This k variable will itarate the while loop down below.
+        //The reason of using a while instead of a loop is because the k number cold be modified in case a loop is called
+        unsigned int k = 0;
+
+        //This variable is a flag for when a loop is detected.
+        //So for example let's say the word sendToGulag is detected, then loop will be equal to true.
+        //This will comunicate the for loop inside with the main one (the one below) and let the loop while ( k < lines.size()) know that he is going to go back.
+        bool loop = false;
+
+        while ( k < lines.size()) {
+        
+            std::string sentence = lines[k];
             std::istringstream iss(sentence);
             std::string word;
             std::vector <std::string> words;
@@ -69,15 +91,21 @@ void compile() {
             }
 
             for (unsigned short int i = 0; i < words.size(); i++) {
-                
-                //Operators
 
-                if (words[i] == "comrade") {
                 
+                //Comment
+                //the character ; will be used to denotate a comment
+                if (words[i] == ";" || words[i][0] == ';') {
+                    break;
+                }
+
+                //Operators
+                if (words[i] == "comrade") {
+
                     try {
 
                         if (!isKeyword(words[i + 1])) {
-                        
+
                             try {
 
                                 createIntVariable(words[i + 1], 0);
@@ -88,13 +116,13 @@ void compile() {
                                 std::cout << "An error ocurred" << e.what();
 
                             }
-                                   
+
                         }
                         else {
-                        
+
                             std::cout << errors(1000, words[i + 1]);
                             break;
-                            
+
                         }
 
                     }
@@ -103,35 +131,76 @@ void compile() {
                         std::cout << "An error ocurred" << e.what();
 
                     }
-                
+
                 }
-                
+
+                if (words[i] == "if") {
+
+                    int previousValue = 0, nextValue = 0;
+
+                    if (isNumber(words[i + 1])) {
+
+                        previousValue = std::stoi(words[i + 1]);
+
+                    }
+                    else {
+
+                        previousValue = getIntVariable(words[i + 1]);
+
+                    }
+
+                    if (isNumber(words[i + 3])) {
+
+                        nextValue = std::stoi(words[i + 3]);
+
+                    }
+                    else {
+
+                        nextValue = getIntVariable(words[i + 3]);
+
+                    }
+
+                    if (!comparison(words[i + 2], previousValue, nextValue)) {
+
+                        break;
+
+                    }
+                }
+
+                if (words[i] == "gulag") {
+
+                    gulagPosition = k;
+                    break;
+
+                }
+
                 //math operators
                 if (words[i] == "=") {
-               
+
                     if (isNumber(words[i + 1])) {
 
                         setIntVariable(words[i - 1], std::stoi(words[i + 1]));
                     }
                     else {
-                    
+
                         setIntVariable(words[i - 1], getIntVariable(words[i + 1]));
-                    
+
                     }
                 }
 
-                if (words[i] == "+="){
-            
+                if (words[i] == "+=") {
+
                     if (isNumber(words[i + 1])) {
 
-                        intMath(0 , words[i - 1] , std::stoi(words[i + 1]));
+                        intMath(0, words[i - 1], std::stoi(words[i + 1]));
 
-                    }else {
-                    
-                        intMath(0, words[i - 1], getIntVariable(words[i+1]));
-                    
                     }
-            
+                    else {
+
+                        intMath(0, words[i - 1], getIntVariable(words[i + 1]));
+
+                    }
+
                 }
 
                 if (words[i] == "-=") {
@@ -184,140 +253,87 @@ void compile() {
 
                 //functions
 
-                if (words[i] == "alert") {
-                
+                if (words[i] == "alert" || words[i] == "propaganda") {
+
                     std::string msg;
 
                     for (unsigned short int j = i + 2; j < words.size(); j++) {
 
                         if (words[j] != ")") {
-                        
+
                             try {
 
-                                msg += (" " + words[j]);
-                            
+                                msg += (words[j] + " ");
+
                             }
-                            catch (std::exception& e ){
-                            
+                            catch (std::exception& e) {
+
                                 std::cout << errors(2000, "");
 
                             }
 
                         }
+                        else { break; }
 
                     }
 
-                    std::cout << msg;  
+                    std::cout << msg;
                 }
-                
+
                 if (words[i] == "manifesto") {
-                
+
                     std::cout << getIntVariable(words[i + 2]);
-                
+
                 }
-                
+
                 if (words[i] == "progress") {
-                
+
                     std::cout << "\n";
+
+                }
+
+                if (words[i] == "censor" || words[i] == "revolutionize") {
+                
+                    system("cls");
                 
                 }
 
                 //Use contribute as a name for a function for user input 
 
                 if (words[i] == "contribute") {
-                    
+
                     int t = 0;
                     std::cin >> t;
 
                     if (words[i + 2] != ")" && words[i + 2] != "(" && words[i + 2] != "()") {
-                    
+
                         setIntVariable(words[i + 2], t);
 
                     }
+                }    
 
-                    
-                    
-                
-                }
+                //This condition must always be cheked at the end
+                if (words[i] == "sendToGulag") {
 
-                //methods     
-
-                if (words[i] == "worker") {
-                
-                    try {
-
-                        if (!isKeyword(words[i + 1])) {
-
-                                methods.push_back(0);
-                                IDs.push_back(words[i+1]);
-
-                                int r = 0;
-                                int previusValue = 0;
-                                int nextValue = 0;
-
-                                if (isNumber(words[i + 3])) {
-
-                                    previusValue = std::stoi(words[i + 3]);
-
-                                }
-                                else {
-
-                                    previusValue = getIntVariable(words[i + 3]);
-
-                                }
-
-                                if (isNumber(words[i + 7])) {
-
-                                    previusValue = std::stoi(words[i + 5]);
-
-                                }
-                                else {
-
-                                    previusValue = getIntVariable(words[i + 5]);
-
-                                }
-
-                                if (words[i + 4] == "+") {
-
-                                    r = methodMath(0, previusValue, nextValue);
-
-                                }
-                                else if (words[i + 4] == "-") {
-
-                                    r = methodMath(1, previusValue, nextValue);
-
-                                }
-                                else if (words[i + 4] == "*") {
-
-                                    r = methodMath(2, previusValue, nextValue);
-
-                                }
-                                else if (words[i + 4] == "/") {
-
-                                    r = methodMath(3, previusValue, nextValue);
-
-                                }
-
-                                setMethod(words[i + 1], r);
-
-                        }
-                        else {
-
-                            break;
-                        }
-
-                    }
-                    catch (std::exception& e) {
-
-                        std::cout << errors(1001, words[i + 1]) << "An error ocurred" << e.what();
-
-                    }
-                
+                    loop = true;
+                    break;
+       
                 }
 
             }
 
             code += sa;
+
+            if (!loop) {
+                k++;
+            }
+            else {
+
+                k = gulagPosition;
+                loop = false;
+            }
+            
+   
         }
 
         
@@ -374,6 +390,89 @@ bool isNumber(std::string data) {
         return false; 
     }
 
+
+}
+
+bool comparison(std::string condition, int previousValue, int nextValue) {
+
+    if (condition == "==") {
+    
+        if (previousValue == nextValue){
+        
+            return true;
+
+        }
+        else {
+
+            return false;
+
+        }   
+    }
+    else if (condition == "!=") {
+
+        if (previousValue != nextValue) {
+
+            return true;
+
+        }
+        else {
+
+            return false;
+
+        }
+    }
+    else if (condition == "<") {
+
+        if (previousValue < nextValue) {
+
+            return true;
+
+        }
+        else {
+
+            return false;
+
+        }
+    }
+    else if (condition == ">") {
+
+        if (previousValue > nextValue) {
+
+            return true;
+
+        }
+        else {
+
+            return false;
+
+        }
+    }
+    else if (condition == "<=") {
+
+        if (previousValue <= nextValue) {
+
+            return true;
+
+        }
+        else {
+
+            return false;
+
+        }
+    }
+    else if (condition == ">=") {
+
+        if (previousValue >= nextValue) {
+
+            return true;
+
+        }
+        else {
+
+            return false;
+
+        }
+    }
 
 }
 
@@ -468,16 +567,12 @@ int methodMath(int operationID, int previousValue, int nextValue) {
 
     switch (operationID) {
     
-    case 0: return previousValue + nextValue; break;
-    case 1: return previousValue - nextValue; break;
-    case 2: return previousValue * nextValue; break;
-    case 3: return previousValue / nextValue; break;
-    
+        case 0: return previousValue + nextValue; break;
+        case 1: return previousValue - nextValue; break;
+        case 2: return previousValue * nextValue; break;
+        case 3: return previousValue / nextValue; break;
     
     }
-
-
-
 }
 
 
@@ -495,7 +590,5 @@ std::string errors(int ID , std::string variableName) {
     }
 
     std::cout << "The CCCP does not have a place for errors";
-
-
 }
 
