@@ -1,0 +1,7 @@
+comrade x 
+x = 2
+comrade y
+y = 4
+contribute ( y )
+x += y
+manifesto ( x )
