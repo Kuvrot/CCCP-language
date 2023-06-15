@@ -1,3 +1,7 @@
+//Coded by Jaime Arturo @Kuvrot
+//Made 14/06/2023
+//V 1.0.0
+
 #include <iostream>
 #include <fstream>;
 #include <string>;
