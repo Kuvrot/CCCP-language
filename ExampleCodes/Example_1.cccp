@@ -1,0 +1,17 @@
+;   This is a example code for cccp
+;	This code creates two variables (comrades) and ask for input
+;   if the sum of the first variable plus the user input gives 4 the program will be ended
+;	if the sum is equal to anything else, then the program will ask for input again.	
+	
+
+comrade ivan = 2 ; this creates a variable named ivan
+comrade dmitri = 0; this creates a variable named dmitri
+gulag ; this means in some moment we will jump here again
+alert ( insert a number ) ; this prints a message 
+ivan = 2
+contribute ( dmitri ) ; this allows for user input to assign a value to dmitri
+ivan += dmitri
+censor ; this cleans the screen
+if ivan != 4 alert ( that's not the number im looking for ) progress sendToGulag ;sendToGulag is a goto to gulag
+if ivan == 4 alert ( 4! that's the number )
+

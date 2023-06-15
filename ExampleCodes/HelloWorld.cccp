@@ -1,0 +1,3 @@
+; you can use alert () or propaganda () to print a message on the screen
+
+alert ( Hello World! )
