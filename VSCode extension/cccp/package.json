@@ -1,0 +1,25 @@
+{
+  "name": "cccp",
+  "displayName": "cccp",
+  "description": "Simple programming language based on the USSR",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.79.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "cccp",
+      "aliases": ["CCCP", "cccp"],
+      "extensions": [".cccp"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "cccp",
+      "scopeName": "source.cccp",
+      "path": "./syntaxes/cccp.tmLanguage.json"
+    }]
+  }
+}

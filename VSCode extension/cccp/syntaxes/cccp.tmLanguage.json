@@ -1,0 +1,54 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "CCCP",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		  },
+		  {
+			"include": "#comments"
+		  }
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.cccp",
+				"match": "\\b(comrade|if|true|false|manifesto|propaganda|worker|alert|contribute|gulag|sendToGulag|censor)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.cccp",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.cccp",
+					"match": "\\\\."
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+			  {
+				"match": "\\b\\d+\\b",
+				"name": "constant.numeric.cccp"
+			  }
+			]
+		  },
+		  "comments": {
+			"patterns": [
+			  {
+				"match": ";.*$",
+				"name": "comment.cccp"
+			  }
+			]
+		  }
+	},
+	"scopeName": "source.cccp"
+}
