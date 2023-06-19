@@ -1,12 +1,9 @@
-//Coded by Jaime Arturo @Kuvrot
-//Made 14/06/2023
-//V 1.0.0
-
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>;
 #include <string>;
 #include <vector>;
 #include <sstream>;
+#include <math.h>
 
 //This is memory variable will store all the variables declared
 std::vector <int> memory;
@@ -18,7 +15,7 @@ std::string path;
 std::string keywords = "comrade if -> + - = / * true false manifesto propaganda ; 1 2 3 4 5 6 7 8 9 0 worker alert += -+ /= *= contribute gulag sendToGulag censor contribute revolutionize";
 std::vector <int> sum;
 
-void compile();
+void interpreter();
 void createIntVariable(std::string name, int data);
 int  getIntVariable(std::string name);
 int  methodMath(int operationID, int previousValue, int nextValue);
@@ -35,24 +32,32 @@ std::string errors(int ID , std::string variableName);
 
 int main()
 {   
-    std::cin >> path;
-    file.open(path , std::ios::in);
 
-    try {
-        if (file.is_open()) {
-            compile();
+    while (1) {
+    
+        std::cout << "Comrade, provide the precise route to a .cccp file" << std::endl;
+
+        std::cin >> path;
+        file.open(path, std::ios::in);
+
+        try {
+            if (file.is_open()) {
+                system("cls");
+                interpreter();
+            }
+            else {
+                throw std::runtime_error(errors(1917, ""));
+            }
         }
-        else {
-            throw std::runtime_error(errors(1917 , ""));
+        catch (const std::exception& e) {
+            std::cout << "" << e.what() << std::endl;
         }
-    }
-    catch (const std::exception& e) {
-        std::cout << "" << e.what() << std::endl;
+    
     }
 }
 
 
-void compile() {
+void interpreter() {
 
         std::string code;
         std::vector <std::string> lines;
@@ -252,6 +257,21 @@ void compile() {
 
                 }
 
+                if (words[i] == "%=") {
+
+                    if (isNumber(words[i + 1])) {
+
+                        intMath(3, words[i - 1], std::stoi(words[i + 1]));
+
+                    }
+                    else {
+
+                        intMath(4, words[i - 1], getIntVariable(words[i + 1]));
+
+                    }
+
+                }
+
                 //Logical operators
 
 
@@ -340,8 +360,13 @@ void compile() {
    
         }
 
-        
-  
+       std::cout << std::endl;
+       std::cout <<  "----------------------------------------------------------------------"  << std::endl;
+       std::cout << "With great honor and the indomitable spirit of the USSR, the program has accomplished its mission, triumphantly ceasing its execution." << std::endl;
+       std::cout << "----------------------------------------------------------------------" << std::endl;
+       std::cout << std::endl;
+       std::cout << std::endl;
+    
     file.close();
 
 }
@@ -539,6 +564,7 @@ void intMath (int operationID, std::string name, int addValue) {
         case 1: t = getIntVariable(name) - addValue; setIntVariable(name, t); break;
         case 2: t = getIntVariable(name) * addValue; setIntVariable(name, t); break;
         case 3: t = getIntVariable(name) / addValue; setIntVariable(name, t); break;
+        case 4: t = getIntVariable(name) % addValue; setIntVariable(name, t); break;
 
     }
 
@@ -575,6 +601,7 @@ int methodMath(int operationID, int previousValue, int nextValue) {
         case 1: return previousValue - nextValue; break;
         case 2: return previousValue * nextValue; break;
         case 3: return previousValue / nextValue; break;
+        case 4: return previousValue % nextValue; break;
     
     }
 }
@@ -592,7 +619,5 @@ std::string errors(int ID , std::string variableName) {
         case 2000: return "Error 2000: socialist print syntax error."; break;
     
     }
-
-    std::cout << "The CCCP does not have a place for errors";
 }
 
