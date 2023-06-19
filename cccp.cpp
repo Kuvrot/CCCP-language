@@ -7,21 +7,16 @@
 
 //This is memory variable will store all the variables declared
 std::vector <int> memory;
-std::vector <int> methods;
 std::vector <std::string> IDs;
-std::vector <std::string> Method_IDs;
 std::fstream file;
 std::string path;
 std::string keywords = "comrade if -> + - = / * true false manifesto propaganda ; 1 2 3 4 5 6 7 8 9 0 worker alert += -+ /= *= contribute gulag sendToGulag censor contribute revolutionize";
-std::vector <int> sum;
 
 void interpreter();
 void createIntVariable(std::string name, int data);
 int  getIntVariable(std::string name);
-int  methodMath(int operationID, int previousValue, int nextValue);
 void intMath (int operationID , std::string name, int addValue);
 void setIntVariable(std::string name, int data);
-void setMethod(std::string, int data);
 bool isKeyword (std::string name);
 bool isNumber  (std::string data);
 bool comparison(std::string condition , int previousValue, int nextValue);
@@ -570,41 +565,6 @@ void intMath (int operationID, std::string name, int addValue) {
 
 }
 
-//The methods down below are for creation and manipulation of methods or functions
-
-void setMethod(std::string name, int data) {
-
-    for (unsigned int i = 0; i < Method_IDs.size(); i++) {
-
-        if (Method_IDs[i] == name) {
-
-            try {
-
-                methods[i] = data;
-
-            }
-            catch (std::exception& e) {
-
-                std::cout << "comrade " + name + " can't be equal to " << data << e.what() << std::endl;
-
-            }
-        }
-    }
-
-}
-
-int methodMath(int operationID, int previousValue, int nextValue) {
-
-    switch (operationID) {
-    
-        case 0: return previousValue + nextValue; break;
-        case 1: return previousValue - nextValue; break;
-        case 2: return previousValue * nextValue; break;
-        case 3: return previousValue / nextValue; break;
-        case 4: return previousValue % nextValue; break;
-    
-    }
-}
 
 
 //This method returns a string with an error message depending of the given ID , the string variableName is for errors that need to be more specific but if is not you can you pass "" in that field
