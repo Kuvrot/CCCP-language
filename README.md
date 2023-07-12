@@ -11,7 +11,6 @@
 
  ☭  CCCP is a simple programming language based on the Soviet Union ☭
   * Current version: 1.3
-  * The distribution and the documentation it's still in progress.
   
 ## installation
 
