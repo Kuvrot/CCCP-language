@@ -1,8 +1,8 @@
 ﻿#include <iostream>
-#include <fstream>;
-#include <string>;
-#include <vector>;
-#include <sstream>;
+#include <fstream>
+#include <string>
+#include <vector>
+#include <sstream>
 #include <math.h>
 
 //This is memory variable will store all the variables declared
