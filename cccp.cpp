@@ -5,7 +5,7 @@
 #include <sstream>
 #include <math.h>
 
-//This is memory variable will store all the variables declared
+//This is a memory variable that will store all the variables declared
 std::vector <int> memory;
 std::vector <std::string> IDs;
 std::fstream file;
