@@ -2,16 +2,21 @@
 ;	This code creates two variables (comrades) and ask for input
 ;   if the sum of the first variable plus the user input gives 4 the program will be ended
 ;	if the sum is equal to anything else, then the program will ask for input again.	
-	
+;   at the end will be print the sum of the two initial variables.
 
 comrade ivan = 2 ; this creates a variable named ivan
-comrade dmitri = 0; this creates a variable named dmitri
+comrade dmitri = 5; this creates a variable named dmitri
+comrade sum = 0
 gulag ; this means in some moment we will jump here again
 alert ( insert a number ) ; this prints a message 
 ivan = 2
-contribute ( dmitri ) ; this allows for user input to assign a value to dmitri
-ivan += dmitri
+contribute ( ivan ) ; this allows for user input to assign a value to dmitri
+sum += dmitri
 censor ; this cleans the screen
 if ivan != 4 alert ( that's not the number im looking for ) progress sendToGulag ;sendToGulag is a goto to gulag
 if ivan == 4 alert ( 4! that's the number )
+progress 
+alert ( ivan + dmitri = ) manifesto ( sum )
+
+
 
