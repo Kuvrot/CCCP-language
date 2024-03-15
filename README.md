@@ -14,8 +14,8 @@
   
 ## Install
 
-You can download the cccp interptreter for windows [here](https://github.com/Kuvrot/CCCP-language/releases/tag/v1.0.0)
-To execute a program save your code with an .cccp extension execute the program cccp.exe and a terminal will open, a path for your file will be requested, enter the path and your cccp program should run.
+* You can download the cccp interptreter for windows [here](https://github.com/Kuvrot/CCCP-language/releases/tag/v1.0.0)
+* To execute a program save your code with an .cccp extension execute the program cccp.exe and a terminal will open, a path for your file will be requested, enter the path and your cccp program should run.
 
 ## Build
 
