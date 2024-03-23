@@ -24,7 +24,7 @@
     git clone https://github.com/Kuvrot/CCCP-language.git
   ```
 
-Compile the main.cpp with your prefered compiler (Visual Studio, DevC++, GCC, etc).
+Compile the main.cpp with your preferred tool (Visual Studio, DevC++, GCC, etc).
   
   
 ## Documentation
